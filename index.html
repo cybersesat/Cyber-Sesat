@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cyber Sesat</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" href="/assets/icon-192.png">
+  <style>
+    html,body,#app { height:100%; margin:0; }
+    .bar { padding:10px; border-bottom:1px solid #eee; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif; }
+    iframe { border:0; width:100%; height:calc(100% - 52px); }
+    .hint { font-size:12px; color:#666 }
+    .btn { padding:8px 12px; border-radius:8px; border:1px solid #ddd; background:#fff; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <div class="bar">
+    <strong>Cyber Sesat</strong>
+    <span class="hint"> — Ini bungkus PWA dari situs kamu.</span>
+    <button id="installBtn" class="btn" style="float:right; display:none;">Install App</button>
+  </div>
+  <!--
+    IMPORTANT:
+    - Ganti ./link_generator_random.html dengan URL situs kamu (harus mengizinkan di-embed; jika situs kamu menolak iframe, abaikan iframe dan taruh konten asli situsmu di sini).
+    - Jika kamu memasang file ini langsung di situs aslimu, lebih baik jangan pakai iframe. Biarkan konten asli menjadi halaman ini.
+  -->
+  <iframe id="frame" src="./link_generator_random.html"></iframe>
+
+  <script>
+    // Register SW
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/service-worker.js");
+      });
+    }
+
+    // PWA install prompt
+    let deferredPrompt;
+    const installBtn = document.getElementById("installBtn");
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = "inline-block";
+    });
+    installBtn.addEventListener("click", async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      installBtn.style.display = "none";
+    });
+  </script>
+</body>
+</html>

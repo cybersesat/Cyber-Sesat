@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Link Generator</title>
+  <style>
+    body {font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4;}
+    h2 {color: #333;}
+    input, button {padding: 8px; margin: 5px 0;}
+    textarea {width: 100%; height: 300px; margin-top: 10px;}
+    .card {background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🔗 Link Generator</h2>
+    <label>Template Link (gunakan {num} sebagai kode acak):</label><br>
+    <input type="text" id="template" value="https://banjarmasin.tribunnews.com/2025/{num}" style="width:100%"><br>
+
+    <label>Jumlah link yang ingin dibuat:</label><br>
+    <input type="number" id="jumlah" value="100"><br>
+
+    <label>Panjang kode acak:</label><br>
+    <input type="number" id="length" value="8"><br>
+
+    <button onclick="generateLinks()">Generate</button>
+    <button onclick="downloadLinks()">Download .txt</button>
+
+    <textarea id="output" placeholder="Hasil link akan muncul di sini..."></textarea>
+  </div>
+
+  <script>
+    function randomString(length) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
+    }
+
+    function generateLinks() {
+      const template = document.getElementById('template').value;
+      const jumlah = parseInt(document.getElementById('jumlah').value);
+      const length = parseInt(document.getElementById('length').value);
+      let result = '';
+
+      for (let i = 0; i < jumlah; i++) {
+        const randStr = randomString(length);
+        result += template.replace('{num}', randStr) + "\n";
+      }
+
+      document.getElementById('output').value = result;
+    }
+
+    function downloadLinks() {
+      const text = document.getElementById('output').value;
+      const blob = new Blob([text], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'links.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
