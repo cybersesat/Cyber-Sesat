@@ -4,30 +4,60 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cyber Sesat</title>
-  <!-- Tambahkan favicon -->
+
+  <!-- ✅ Favicon -->
   <link rel="icon" type="image/x-icon" href="cyber_sesat.ico">
+  <link rel="shortcut icon" href="cyber_sesat.ico" type="image/x-icon">
+  <link rel="icon" href="cyber_sesat.ico">
+
   <link rel="manifest" href="/manifest.webmanifest">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#000000">
   <link rel="apple-touch-icon" href="/assets/icon-192.png">
+
   <style>
-    html,body,#app { height:100%; margin:0; }
-    .bar { padding:10px; border-bottom:1px solid #eee; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif; display:flex; align-items:center; }
-    iframe { border:0; width:100%; height:calc(100% - 52px); }
-    .hint { font-size:12px; color:#666; margin-left:6px; }
-    .btn { padding:8px 12px; border-radius:8px; border:1px solid #ddd; background:#fff; cursor:pointer; margin-left:auto; }
-    .logo { width:24px; height:24px; margin-right:6px; vertical-align:middle; }
+    html,body,#app { height:100%; margin:0; background:#121212; color:#eee; }
+    .bar { 
+      padding:12px 16px; 
+      border-bottom:1px solid #333; 
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif; 
+      display:flex; 
+      align-items:center; 
+      background:#1e1e1e;
+      box-shadow:0 2px 4px rgba(0,0,0,0.4);
+    }
+    iframe { border:0; width:100%; height:calc(100% - 56px); background:#1a1a1a; }
+    .hint { font-size:12px; color:#aaa; margin-left:6px; }
+    .btn { 
+      padding:8px 14px; 
+      border-radius:8px; 
+      border:1px solid #555; 
+      background:#2c2c2c; 
+      color:#eee; 
+      cursor:pointer; 
+      margin-left:auto; 
+      transition: all 0.2s ease;
+    }
+    .btn:hover {
+      background:#3a3a3a;
+      border-color:#4a90e2;
+      color:#4a90e2;
+    }
+    .logo { width:26px; height:26px; margin-right:8px; vertical-align:middle; }
+    strong { font-size:18px; letter-spacing:0.5px; }
   </style>
 </head>
 <body>
   <div class="bar">
-    <!-- Logo + Judul -->
+    <!-- ✅ Logo + Judul -->
     <img src="cyber_sesat.ico" alt="Cyber Sesat" class="logo">
     <strong>Cyber Sesat</strong>
     <span class="hint"> — Cyber Sesat is Back.</span>
     <button id="installBtn" class="btn" style="display:none;">Install App</button>
   </div>
+
   <!-- iframe -->
   <iframe id="frame" src="./link_generator_random.html"></iframe>
+
   <script>
     // Register SW
     if ("serviceWorker" in navigator) {
@@ -35,6 +65,7 @@
         navigator.serviceWorker.register("/service-worker.js");
       });
     }
+
     // PWA install prompt
     let deferredPrompt;
     const installBtn = document.getElementById("installBtn");
